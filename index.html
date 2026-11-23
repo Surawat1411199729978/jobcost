@@ -249,7 +249,7 @@ main{padding:8px 16px calc(var(--safe-b) + 40px);max-width:720px;margin:0 auto}
 <main id="main"><div class="center"><div class="spin"></div></div></main>
 <div class="scrim" id="scrim"></div><div class="sheet" id="sheet"></div><div class="toast" id="toast"></div>
 <script>
-const APP_VERSION='jc-2';
+const APP_VERSION='jc-3';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pad2=n=>String(n).padStart(2,'0');
@@ -277,7 +277,7 @@ const dfmt=(v,d=0)=>(v>0.005?'+':'')+fm(v,d);
 
 /* ===== Shell: sign-in + SharePoint list 'Job Cost' ===== */
 const DEMO=new URLSearchParams(location.search).has('demo');
-const CFGA={clientId:"73241ae0-9aa1-49fe-b2c7-caa2449a0091",tenantId:"410b700e-bb2a-46d2-b4c0-449aec007d0e",siteUrl:"https://unboffice.sharepoint.com/sites/ITPortal"};
+const CFGA={clientId:"85943c20-6bff-4c1d-8bcb-72a3b1e10bb5",tenantId:"410b700e-bb2a-46d2-b4c0-449aec007d0e",siteUrl:"https://unboffice.sharepoint.com/sites/JobCost"};
 const SCOPES=['User.Read','Sites.ReadWrite.All'];
 const LIST='Job Cost';
 let msal=null,account=null,siteId='',lists={},me='',mode='loading',errMsg='';
@@ -808,7 +808,7 @@ async function boot(){
     const u=new URL(CFGA.siteUrl);siteId=(await g(`/sites/${u.hostname}:${u.pathname}`)).id;
     let next=`/sites/${siteId}/lists?$select=id,displayName&$top=200`;
     while(next){const r=await g(next);r.value.forEach(l=>lists[l.displayName]=l.id);next=r['@odata.nextLink']}
-    if(!lists[LIST])throw new Error(`ยังไม่มีรายการ “${LIST}” ใน SharePoint ITPortal — แจ้งผู้ดูแลระบบ`);
+    if(!lists[LIST])throw new Error(`ยังไม่มีรายการ “${LIST}” ใน SharePoint JobCost — แจ้งผู้ดูแลระบบ`);
     DATA=await store.load();mode='ready';render();
   }catch(e){errMsg=e.message;mode='err';render()}
 }
